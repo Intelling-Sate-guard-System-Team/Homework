@@ -41,9 +41,6 @@ if __name__=='__main__':
     for i_batch,batch_data in enumerate(train_loader):
         print(i_batch)
         print(batch_data['image'] / 255)
-        # plt.imshow(train_data.train_data[0].numpy(), cmap='gray')
-        # plt.title('%i' % train_data.train_labels[0])
-        # plt.show()
     test_data = Data('./write/test', transform=None)
     test_loader = DataLoader(test_data, batch_size=BATCH_SIZE, shuffle=True)
     for i_batch,batch_data in enumerate(train_loader):
@@ -101,7 +98,7 @@ def plot_with_labels(lowDWeights, labels):
     plt.xlim(X.min(), X.max()); plt.ylim(Y.min(), Y.max()); plt.title('Visualize last layer'); plt.show(); plt.pause(0.01)
 
 plt.ion()
-# training and testing
+
 for epoch in range(EPOCH):
     for step, (b_x, b_y) in enumerate(train_loader):   #
 
@@ -117,7 +114,6 @@ for epoch in range(EPOCH):
             accuracy = float((pred_y == test_y.data.numpy()).astype(int).sum()) / float(test_y.size(0))
             print('Epoch: ', epoch, '| train loss: %.4f' % loss.data.numpy(), '| test accuracy: %.2f' % accuracy)
             if HAS_SK:
-                # Visualization of trained flatten layer (T-SNE)
                 tsne = TSNE(perplexity=30, n_components=2, init='pca', n_iter=5000)
                 plot_only = 500
                 low_dim_embs = tsne.fit_transform(last_layer.data.numpy()[:plot_only, :])
